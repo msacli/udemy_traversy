@@ -84,7 +84,7 @@ router.post('/login', (req,res)=>{
 
             // check password use bcrypt.compare
             bcrypt.compare(password, user.password)
-            // return promise icinde true veya flase isMatch dönecek
+            // return promise icinde true veya false boolean onu da  isMatch diyelim
                 .then(isMatch => {
                     if(isMatch) {
                     // user matched
@@ -113,7 +113,11 @@ router.post('/login', (req,res)=>{
 // @access Private
 
 router.get('/current', passport.authenticate('jwt', {session: false}), (req,res)=>{
-    res.json({msg: 'Success'});
+    res.json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email
+    });
 });
 
 module.exports = router;
